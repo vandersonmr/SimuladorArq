@@ -1,0 +1,9 @@
+Este programa codifica a instrução em hexadecimal.
+
+Ex.: ./mont lui r1 10 10
+
+Observe que nem todas as instruções necessitam de 3 parâmetros. Contudo, esta
+ferramenta pede 4 parâmetros. No caso de instruções com menos de 3 parâmetros,
+basta passar um valor qualquer.
+
+
