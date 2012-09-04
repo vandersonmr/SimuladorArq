@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include "memoria.h"
 #include "cpu.h"
-
+/*Linux é de mais*/
 /* constructor */
 inicialize_simulacao_1(char* namearq){ 
 
@@ -11,7 +11,7 @@ inicialize_simulacao_1(char* namearq){
 
   /* memória */
   MEMORIA_Inicializacao1(namearq);
-
+	
   /* cpu */
   CPU_Inicializacao();
 
