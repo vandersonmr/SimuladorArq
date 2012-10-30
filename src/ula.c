@@ -19,9 +19,15 @@ int32 ULA_execute (int32 A, int32 B, uint32 tarefa){
 	case 12: local = ~(A); break;
 	case 13: local = A  << B; 
 	case 14: local = A >> B;
-	// !TODO ASR
+	case 15: local = ASL(A,B);
   }
  
   return (local);
 
 }
+
+int32 ASL(int32 A,int32 B){
+	//!TODO	
+	return 0;
+}
+
