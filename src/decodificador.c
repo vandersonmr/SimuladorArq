@@ -3,9 +3,9 @@
 #include "cpu.h"
 #include "memoria.h"
 #define classMask 0x78000000
-#define src1RegMask 0x3C00000
+#define src1RegMask 0x3E00000
 #define src2RegMask 0x1F0000
-#define targetRegMask 0x1F000
+#define targetRegMask 0xF800
 #define opMask 0x3C0
 #define imediatoMask1 0xFFFF
 #define imediatoMask2 0x3FFFFFFF
@@ -53,18 +53,6 @@ void decodificaFormato1()
 	dec2exec->src2Reg = src2Reg;
 	dec2exec->targetReg = targetReg;
 	dec2exec->opcode = opcode;
-}
-
-int main()
-{
-	CONTROLE_DE teste;
-	uint32 data = 0x4610C0;
-	decodifica(data, &teste);
-	printf("r1: %d \n", teste.src1Reg);
-	printf("r2: %d \n", teste.src2Reg);
-	printf("rd: %d \n", teste.targetReg);
-	printf("op: %d \n", teste.opcode);
-	return 0;
 }
 
 void decodificaFormato2()

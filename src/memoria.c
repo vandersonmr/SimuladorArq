@@ -1,3 +1,4 @@
+#include "defines.h"
 /* memoria */
 word m[MEMORY_W]; 
 /* area inicial da memoria - escrita na tela */
