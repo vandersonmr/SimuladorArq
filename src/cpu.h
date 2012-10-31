@@ -1,6 +1,5 @@
 #ifndef CPU_H
 #define CPU_H
-
 void CPU_Execute();
 void CPU_Imprime();
 
@@ -20,6 +19,7 @@ typedef struct CONTROLES_DE {
         unsigned long int src2Reg;
         unsigned long int targetReg;
         unsigned long int opcode;
+	int Jump;
 }CONTROLE_DE;
 
 typedef struct CONTROLE_EM {

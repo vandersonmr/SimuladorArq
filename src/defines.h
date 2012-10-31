@@ -6,7 +6,7 @@
 
 /* tamanho da memoria */
 #define MEMORY_W 65536
-
+#define numRegs 32
 /* definicao de tipos */
 #define int16 short int  // inteiro de 16 bits
 #define int32 long int       // inteiro de 32 bits

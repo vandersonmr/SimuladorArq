@@ -12,6 +12,6 @@ int32 BANCO_GetRegister(int32);
 /* seta contador de programa */
 void BANCO_SetPc(int32);
 /* retorna valor do contador de programa */
-int BANCO_GetPc();
+int32 BANCO_GetPc();
 
 #endif

@@ -1,4 +1,7 @@
-
+#include "defines.h"
+#include "cpu.h"
+#include "banco.h"
+#include "decodificador.h"
 /* variaveis utilizadas para contadores de instrucao */
 int32 arithop;
 int32 setop;
@@ -25,10 +28,10 @@ void CPU_Inicializacao()
 	branch = 0;
 
 	/* inicializacao de registradores de instrucoes */
-	
+
 	/* INSTANCIACAO DOS COMPONENTES INTERNOS */
 	BANCO_Inicializacao();
-	
+
 }
 
 void CPU_Execute()
@@ -53,10 +56,10 @@ void CPU_Finalizacao()
 }
 
 /* atualiza barreira entre busca e decodificacao */
-void CPU_SetBusca2Decodificacao(uint32 Pc, uint32 Instrucao)
+void CPU_SetBusca2Decodificacao(uint32 Pc, uint32 Instruction)
 {
 	busca2decodificacao.Pc = Pc;
-	busca2decodificacao.Instrucao = Instrucao;
+	busca2decodificacao.Instruction = Instruction;
 }
 
 /* atualiza barreira entre decodificacao e execucao */
@@ -67,8 +70,8 @@ CPU_SetDecoficao2Execucao(uint32 ALU,
 			  uint32 C,
 			  uint32 B, uint32 A, uint32 I, uint32 RB, uint32 RA)
 {
-	decodificacao2execucao.ALU=ALU;
-
+	decodificacao2execucao.ALU = ALU;
+	
 }
 
 /* atualiza barreira entre execucao e acesso a memoria */
@@ -130,7 +133,7 @@ void CPU_Busca()
 /* decodificacao de instrucao */
 void CPU_Decodificacao()
 {
-	
+	decodifica(busca2decodificacao.Instruction,&decodificacao2execucao);
 }
 
 /* execucao de instrucao */
