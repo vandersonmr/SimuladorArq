@@ -1,5 +1,3 @@
-#ifndef MEMORY_H
-#define MEMORY_H
 
 /* inicializações */
 MEMORIA_Inicializacao1(char*);

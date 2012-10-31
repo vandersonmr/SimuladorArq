@@ -1,29 +1,4 @@
 
-struct CONTROLE_BD {
-	/* PC */
-	unsigned long int Pc;
-	/* instrucao */
-	unsigned long int Instruction;
-
-};
-
-struct CONTROLE_DE {
-
-	/* PC */
-	unsigned long int Pc;
-	/* operacao da alu */
-	unsigned long int ALU;
-
-};
-
-struct CONTROLE_EM {
-
-};
-
-struct CONTROLE_MR {
-
-};
-
 /* variaveis utilizadas para contadores de instrucao */
 int32 arithop;
 int32 setop;
@@ -50,9 +25,10 @@ void CPU_Inicializacao()
 	branch = 0;
 
 	/* inicializacao de registradores de instrucoes */
-
+	
 	/* INSTANCIACAO DOS COMPONENTES INTERNOS */
-
+	BANCO_Inicializacao();
+	
 }
 
 void CPU_Execute()
@@ -91,6 +67,7 @@ CPU_SetDecoficao2Execucao(uint32 ALU,
 			  uint32 C,
 			  uint32 B, uint32 A, uint32 I, uint32 RB, uint32 RA)
 {
+	decodificacao2execucao.ALU=ALU;
 
 }
 
@@ -153,7 +130,7 @@ void CPU_Busca()
 /* decodificacao de instrucao */
 void CPU_Decodificacao()
 {
-
+	
 }
 
 /* execucao de instrucao */
