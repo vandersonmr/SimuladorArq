@@ -116,20 +116,22 @@ void CPU_LimpaMemoria2Resultado()
 /* busca de instrucao */
 void CPU_Busca()
 {
-	/*word data = 0;
+	word data = 0;
 
-	data = MEMORIA_Load(BANCO_GetPc());
+	data = MEMORIA_Carregue(BANCO_GetPc());
 
-	SetBusca2Decodificacao(BANCO_GetPc(), data);
+	CPU_SetBusca2Decodificacao(BANCO_GetPc(), data);
 	if (decodificacao2execucao.Jump)
 		BANCO_SetPc(decodificacao2execucao.Pc);
 	else
 		BANCO_SetPc(BANCO_GetPc() + 1);
-	*/
+	
 }
 
 int main(){
-	CPU_SetBusca2Decodificacao(0,0x621840);
+	MEMORIA_CarregueArquivo("codigo.src");
+	CPU_Inicializacao();
+	CPU_Busca();
 	CPU_Decodificacao();
 	printf("src1: %d\n",decodificacao2execucao.src1Reg);
 	printf("src2: %d\n",decodificacao2execucao.src2Reg);

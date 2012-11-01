@@ -1,4 +1,6 @@
 #include "defines.h"
+#include <stdio.h>
+#include <stdlib.h>
 /* memoria */
 word m[MEMORY_W]; 
 /* area inicial da memoria - escrita na tela */
@@ -10,8 +12,8 @@ int endimem;
 
 /* inicializacao */
 void MEMORIA_Inicializacao1(char* namearq) {
-
-
+  int i;
+  for(i=0;i<MEMORY_W;m[i++]=0);
   /* area de memoria para ser escrita na tela */
   mfirst = 0;
   mlast  = 0;
@@ -20,3 +22,34 @@ void MEMORIA_Inicializacao1(char* namearq) {
   MEMORIA_CarregueArquivo(namearq);
 
 }
+
+uint32 MEMORIA_Carregue(uint32 address){
+	if(address < MEMORY_W)
+		return m[address];
+}
+
+void MEMORIA_Armazene(uint32 address,word data){
+	if(address < MEMORY_W)
+		m[address]=data;
+}
+
+void MEMORIA_CarregueArquivo(char *file){
+   	if (file == NULL) {
+        	printf("Error: file pointer is null.\n");
+        	exit(1);
+	}
+	FILE *f = fopen (file, "rt");
+	char line[10];
+	if(f){
+		uint32 int_output;
+		int i=0;
+		while(fgets(line,10,f) != NULL){
+			sscanf(line, "%x", & int_output);			
+			m[i++] = int_output;
+		}	
+	}else{
+		printf("Error: file does not exist.\n");
+	}
+	fclose(f);	
+}
+
