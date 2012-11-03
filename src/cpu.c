@@ -2,6 +2,7 @@
 #include "cpu.h"
 #include "banco.h"
 #include "decodificador.h"
+#include "executador.h"
 /* variaveis utilizadas para contadores de instrucao */
 int32 arithop;
 int32 setop;
@@ -77,7 +78,7 @@ CPU_SetDecoficao2Execucao(uint32 ALU,
 /* atualiza barreira entre execucao e acesso a memoria */
 void CPU_SetExecucao2Memoria()
 {
-
+	
 }
 
 /* atualiza barreira entre memoria e resultado */
@@ -131,25 +132,27 @@ void CPU_Busca()
 int main(){
 	MEMORIA_CarregueArquivo("codigo.src");
 	CPU_Inicializacao();
+	BANCO_SetRegister(0,10);
+	BANCO_SetRegister(1,14);
 	CPU_Busca();
 	CPU_Decodificacao();
-	printf("src1: %d\n",decodificacao2execucao.src1Reg);
-	printf("src2: %d\n",decodificacao2execucao.src2Reg);
-	printf("target: %d\n",decodificacao2execucao.targetReg);
-	printf("opcode: %d\n",decodificacao2execucao.opcode);
+	CPU_Execucao();
+	printf("r2 = %d \n", BANCO_GetRegister(2));
 	return 0;
 }
 
 /* decodificacao de instrucao */
 void CPU_Decodificacao()
 {
-	decodifica(busca2decodificacao.Instruction,&decodificacao2execucao);
+	decodifica(busca2decodificacao.Instruction
+			,&decodificacao2execucao);
 }
 
 /* execucao de instrucao */
 void CPU_Execucao()
 {
-	
+	executa(decodificacao2execucao,
+			&execucao2memoria);
 }
 
 /* acesso a memória */

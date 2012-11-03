@@ -18,12 +18,15 @@ typedef struct CONTROLES_DE {
         unsigned long int src1Reg;
         unsigned long int src2Reg;
         unsigned long int targetReg;
+	unsigned long int formato;
+	unsigned long int opclass;
         unsigned long int opcode;
 	int Jump;
 }CONTROLE_DE;
 
 typedef struct CONTROLE_EM {
-
+	unsigned long int address;
+	unsigned long int value;
 }CONTROLE_EM;
 
 typedef struct CONTROLE_MR {

@@ -19,6 +19,7 @@ void decodifica(uint32 data, CONTROLE_DE * regControle)
 	wData = data;
 	uint32 mask = 0xFC000000;
 	uint32 formato = data & mask;
+	dec2exec->formato = formato >> 30;
 	switch (formato) {
 	case 0x00000000:
 		decodificaFormato1();
@@ -35,6 +36,41 @@ void decodifica(uint32 data, CONTROLE_DE * regControle)
 	}
 }
 
+uint32 decodificaOpcode(){
+        uint32 opcode = dec2exec->opcode;
+        uint32 formato = dec2exec->formato;
+        uint32 class = dec2exec->opclass;
+        if(formato==0){
+                switch(class){
+                        case 0:
+                                return opcode;
+                        case 1:
+                                return opcode+6;
+                        case 2:
+                        case 3:
+                        case 5:
+                        case 6:
+                                return 16;
+                        case 7:
+                                dec2exec->Jump=1;
+                                return 16;
+                }
+        }else if(formato==1) {
+                if(opcode==32){
+                        dec2exec->Jump=1;
+                        return 16;
+                }else{
+                        return opcode;
+                }
+        }else if(formato==2){
+
+        }else if(formato==3){
+                dec2exec->Jump=1;
+                return 16;
+        }
+}
+
+
 void decodificaFormato1()
 {
 	uint32 class = wData & classMask;
@@ -48,11 +84,13 @@ void decodificaFormato1()
 	src2Reg = src2Reg >> 16;
 	targetReg = targetReg >> 11;
 	opcode = opcode >> 6;
-
+	
 	dec2exec->src1Reg = src1Reg;
 	dec2exec->src2Reg = src2Reg;
 	dec2exec->targetReg = targetReg;
 	dec2exec->opcode = opcode;
+	dec2exec->opclass = class;
+	dec2exec->ALU = decodificaOpcode();
 }
 
 void decodificaFormato2()
@@ -65,7 +103,7 @@ void decodificaFormato2()
 	opcode = opcode >> 26;
 	src1Reg = src1Reg >> 21;
 	targetReg = targetReg >> 16;
-
+	
 	//dec2exec <- valores !TODO
 }
 
@@ -79,3 +117,4 @@ void decodificaFormato4()
 {
 	uint32 imediato = wData & imediato;
 }
+
