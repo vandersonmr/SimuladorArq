@@ -25,12 +25,16 @@ typedef struct CONTROLES_DE {
 }CONTROLE_DE;
 
 typedef struct CONTROLE_EM {
-	unsigned long int address;
-	unsigned long int value;
+	unsigned long int ulaResult;
+	unsigned long int opcode;
+	unsigned long int opclass;
+	unsigned long int formato;
+	unsigned long int targetReg;
 }CONTROLE_EM;
 
 typedef struct CONTROLE_MR {
-
+	unsigned long int ulaResult;
+	unsigned long int targetReg;
 }CONTROLE_MR; 
 
 #endif 

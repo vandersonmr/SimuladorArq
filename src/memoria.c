@@ -47,7 +47,7 @@ void MEMORIA_CarregueArquivo(char *file)
 	if (f) {
 		uint32 int_output;
 		int i = 0;
-		while (fgets(line, 10, f) != NULL) {
+		while (fgets(line, 11, f) != NULL) {
 			sscanf(line, "%x", &int_output);
 			m[i++] = int_output;
 		}

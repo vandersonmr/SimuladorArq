@@ -1,8 +1,12 @@
 #include "defines.h"
 
-int32 ASL(int32 A,int32 B){
-        //!TODO 
-        return 0;
+int32 ASL(int32 A,int32 B){ 
+	int i=0;
+	int result=A;
+	for(i=0;i<B;i++){
+        	result = result*2;
+	}
+	return result;
 }
 
 /* executa a operacao Tarefa entre os operandos A e B */
