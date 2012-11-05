@@ -28,6 +28,7 @@ typedef struct CONTROLE_EM {
 	unsigned long int opclass;
 	unsigned long int formato;
 	unsigned long int targetReg;
+	unsigned long int src2Reg;
 	unsigned long int acessaMemoria;
 }CONTROLE_EM;
 

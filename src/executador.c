@@ -25,5 +25,6 @@ void executa(CONTROLE_DE dataDecoded, CONTROLE_EM *results)
 	results->ulaResult = res;     
 	results->targetReg = dataDecoded.targetReg;   
 	results->acessaMemoria=dataDecoded.acessaMemoria;
+	results->src2Reg=dataDecoded.src2Reg;
 }
 

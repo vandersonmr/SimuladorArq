@@ -25,8 +25,9 @@ void acessaMemoria(CONTROLE_EM inData
 		case 4: //Escreve 2 bytes na memória
 			break;
 		case 5: //Escreve 4 bytes na memória
-			MEMORIA_ArmazeneData(inData.ulaResult,inData.targetReg);
-			inData.targetReg = -1;
+			MEMORIA_ArmazeneData(inData.ulaResult,inData.src2Reg);
+			
+			outData->targetReg = -1;
 			break;
 	}
 	

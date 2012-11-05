@@ -37,10 +37,22 @@ void carregaRegistradores(){
         }
 }
 
+void limpaSaida(){
+        dec2exec->Pc=0;
+        dec2exec->ALU=0;
+        dec2exec->src1Reg=0;
+        dec2exec->src2Reg=0;
+        dec2exec->targetReg=0;
+        dec2exec->acessaMemoria=0;
+        dec2exec->Jump=0;
+}
+
 void decodifica(uint32 data, CONTROLE_DE * regControle)
 {
 	dec2exec = regControle;
+	limpaSaida();
 	wData = data;
+	dec2exec->acessaMemoria=-1;
 	uint32 mask = 0xC0000000;
 	uint32 formato2 = data & mask;
 	formato = formato2 >> 30;

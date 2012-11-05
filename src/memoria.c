@@ -31,18 +31,18 @@ uint32 MEMORIA_Carregue(uint32 address)
 		return m[address];
 }
 
-void MEMORIA_Armazene(uint32 address, word data)
+void MEMORIA_Armazene(uint32 address, uint32 data)
 {
 	if (address < MEMORY_W)
 		m[address] = data;
 }
 
-void MEMORIA_ArmazeneData(uint32 address, word data){
+void MEMORIA_ArmazeneData(uint32 address, uint32 data){
 	if(address < MEMORYD_W)
 		mD[address] = data;
 }
 
-uint32 MEMORIA_CarregueData(uint32 address, word data){
+uint32 MEMORIA_CarregueData(uint32 address){
 	if(address < MEMORYD_W)
 		return mD[address];
 }
