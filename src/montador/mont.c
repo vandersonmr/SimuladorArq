@@ -12,7 +12,7 @@ main()
   int i, rd, rs1, rs2, out;
 
   while (scanf ("%s %s %s %s", inst, op1, op2, dest) != EOF) {
-    printf("%s %s %s %s\n", inst, op1, op2, dest);
+    //printf("%s %s %s %s\n", inst, op1, op2, dest);
     for (i = 0; i < N_INST; i++) 
       if (!strcasecmp (instrucoes[i], inst)) {
 	if (*dest == 'r') rd = atoi (&dest[1]);
@@ -60,7 +60,8 @@ main()
 	case 29: out = 0x74000000 | rs1 | rs2; break; // LUI
 	default: out = 0;
 	}
-	printf ("%x\n", out);
+	printf ("%08x", out);
       }
   }
+	printf("\n");
 }

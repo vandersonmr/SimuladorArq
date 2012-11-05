@@ -30,7 +30,8 @@ int32 ULA_execute (int32 A, int32 B, uint32 tarefa){
 	case 13: local = A  << B; 
 	case 14: local = A >> B;
 	case 15: local = ASL(A,B);
-	case 16: break; //nop;
+	case 16: local = A; break;
+	case 17: local = B; //nop;
   }
  
   return (local);

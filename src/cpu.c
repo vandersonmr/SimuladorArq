@@ -8,7 +8,7 @@ int32 arithop;
 int32 setop;
 int32 memop;
 int32 branch;
-int isFinished;
+
 
 /* barreira entre estagio de busca e estagio de decodificacao */
 CONTROLE_BD busca2decodificacao;
@@ -28,7 +28,6 @@ void CPU_Inicializacao()
 	setop = 0;
 	memop = 0;
 	branch = 0;
-	isFinished=0;
 	/* inicializacao de registradores de instrucoes */
 	busca2decodificacao.Instruction=0x18000000;
 	decodificacao2execucao.targetReg=-1;
@@ -43,14 +42,13 @@ void CPU_Inicializacao()
 void CPU_Execute()
 {
 	int i=0;
-	while(i<5){
+	for(i=0;i<MEMORY_W;i++){
 		CPU_Resultado();
-		i++;
+		CPU_Memoria();
+		CPU_Execucao();
+		CPU_Decodificacao();
+		CPU_Busca();
 	}
-	CPU_Resultado();
-	CPU_Resultado();
-	CPU_Resultado();
-	CPU_Resultado();
 }
 
 void CPU_Finalizacao()
@@ -121,7 +119,6 @@ void CPU_Busca()
 {
 	word data = 0;
 	int PC = BANCO_GetPc();
-	if(PC != -1){
 		data = MEMORIA_Carregue(PC);
 		CPU_SetBusca2Decodificacao(PC, data);
 
@@ -129,9 +126,8 @@ void CPU_Busca()
 			BANCO_SetPc(decodificacao2execucao.Pc);
 		else
 			BANCO_SetPc(BANCO_GetPc() + 1);
-	}else{
-		isFinished=1;
-	}
+
+	
 }
 
 int main(){
@@ -151,7 +147,6 @@ void CPU_Decodificacao()
 {
 	decodifica(busca2decodificacao.Instruction
 			,&decodificacao2execucao);
-	CPU_Busca();
 }
 
 /* execucao de instrucao */
@@ -159,21 +154,18 @@ void CPU_Execucao()
 {
 	executa(decodificacao2execucao,
 			&execucao2memoria);
-	CPU_Decodificacao();
 }
 
 /* acesso a memória */
 void CPU_Memoria()
 {
 	acessaMemoria(execucao2memoria,&memoria2resultado);
-	CPU_Execucao();
 }
 
 /* escrita do resultado */
 void CPU_Resultado()
 {
 	escreveResultado(memoria2resultado);
-	CPU_Memoria();
 }
 
 int CPU_Compare(int reg1, int reg2, int opcode)

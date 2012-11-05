@@ -3,6 +3,7 @@
 #include <stdlib.h>
 /* memoria */
 word m[MEMORY_W];
+word mD[MEMORYD_W];
 /* area inicial da memoria - escrita na tela */
 int mfirst;
 /* area final da memoria - escrita na tela */
@@ -36,6 +37,16 @@ void MEMORIA_Armazene(uint32 address, word data)
 		m[address] = data;
 }
 
+void MEMORIA_ArmazeneData(uint32 address, word data){
+	if(address < MEMORYD_W)
+		mD[address] = data;
+}
+
+uint32 MEMORIA_CarregueData(uint32 address, word data){
+	if(address < MEMORYD_W)
+		return mD[address];
+}
+
 void MEMORIA_CarregueArquivo(char *file)
 {
 	if (file == NULL) {
@@ -47,7 +58,7 @@ void MEMORIA_CarregueArquivo(char *file)
 	if (f) {
 		uint32 int_output;
 		int i = 0;
-		while (fgets(line, 11, f) != NULL) {
+		while (fgets(line, 9, f) != NULL) {
 			sscanf(line, "%x", &int_output);
 			m[i++] = int_output;
 		}

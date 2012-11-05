@@ -3,9 +3,9 @@
 
 /*CONTEM A DEFINICAO DOS TIPOS E DE TODAS AS CONTANTES UTILIZADOS NA CONTRUCAO
   DESTE PROJETO*/
-
 /* tamanho da memoria */
 #define MEMORY_W 65536
+#define MEMORYD_W 65536
 #define numRegs 32
 /* definicao de tipos */
 #define int16 short int  // inteiro de 16 bits

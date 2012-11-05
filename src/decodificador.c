@@ -12,9 +12,13 @@
 uint32 wData;
 
 CONTROLE_DE *dec2exec;
+uint32 formato;
+uint32 opcode;
+uint32 class;
+uint32 src2Reg;
 
 void carregaRegistradores(){
-	uint32 formato = dec2exec->formato;
+	
         if(formato==0){
                 dec2exec->src1Reg
                          = BANCO_GetRegister(
@@ -33,16 +37,14 @@ void carregaRegistradores(){
         }
 }
 
-
-
 void decodifica(uint32 data, CONTROLE_DE * regControle)
 {
 	dec2exec = regControle;
 	wData = data;
 	uint32 mask = 0xC0000000;
-	uint32 formato = data & mask;
-	dec2exec->formato = formato >> 30;
-	switch (formato) {
+	uint32 formato2 = data & mask;
+	formato = formato2 >> 30;
+	switch (formato2) {
 	case 0x00000000:
 		decodificaFormato1();
 		break;
@@ -60,10 +62,7 @@ void decodifica(uint32 data, CONTROLE_DE * regControle)
 }
 
 
-int32 decodificaOpcode(){
-        uint32 opcode = dec2exec->opcode;
-        uint32 formato = dec2exec->formato;
-        uint32 class = dec2exec->opclass;
+int32 decodificaOpcode(){        
         if(formato==0){
                 switch(class){
                         case 0:
@@ -71,7 +70,11 @@ int32 decodificaOpcode(){
                         case 1:
                                 return opcode+6;
                         case 2:
-                        case 3:
+                        case 3: 
+				dec2exec->acessaMemoria
+						= opcode;
+
+				return 16;
                         case 5:
                         case 6:
 				dec2exec->targetReg = 1000;
@@ -99,11 +102,11 @@ int32 decodificaOpcode(){
 
 void decodificaFormato1()
 {
-	uint32 class = wData & classMask;
+	class = wData & classMask;
 	uint32 src1Reg = wData & src1RegMask;
-	uint32 src2Reg = wData & src2RegMask;
+	src2Reg = wData & src2RegMask;
 	uint32 targetReg = wData & targetRegMask;
-	uint32 opcode = wData & opMask;
+	opcode = wData & opMask;
 
 	class = class >> 26;
 	src1Reg = src1Reg >> 21;
@@ -114,14 +117,12 @@ void decodificaFormato1()
 	dec2exec->src1Reg = src1Reg;
 	dec2exec->src2Reg = src2Reg;
 	dec2exec->targetReg = targetReg;
-	dec2exec->opcode = opcode;
-	dec2exec->opclass = class;
 	dec2exec->ALU = decodificaOpcode();
 }
 
 void decodificaFormato2()
 {
-	uint32 opcode = wData & classMask;
+	opcode = wData & classMask;
 	uint32 src1Reg = wData & src1RegMask;
 	uint32 targetReg = wData & src2RegMask;
 	uint32 imediato = wData & imediatoMask1;
@@ -133,7 +134,6 @@ void decodificaFormato2()
         dec2exec->src1Reg = src1Reg;
         dec2exec->src2Reg = imediato;
         dec2exec->targetReg = targetReg;
-        dec2exec->opcode = opcode;
         dec2exec->ALU = decodificaOpcode();
 
 }
