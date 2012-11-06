@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <strings.h>
 
-#define N_INST 30
+#define N_INST 31
 
 main()
 {
-  char instrucoes[N_INST][6] = {"JMP","ADD","ADDU","SUB","SUBU","MUL","MULU","AND","OR","XOR","NOT","LSL","LSR","ASR","SEQ","SNE","SLT","SLTU","SLE","SLEU","SGT","SGTU","SGE","SGEU","LDW","STW","JMPL","RET","CALL","LUI"};
+  char instrucoes[N_INST][6] = {"JMP","ADD","ADDU","SUB","SUBU","MUL","MULU","AND","OR","XOR","NOT","LSL","LSR","ASR","SEQ","SNE","SLT","SLTU","SLE","SLEU","SGT","SGTU","SGE","SGEU","LDW","STW","JMPL","RET","CALL","LUI","noop"};
 
   char inst[10], dest[10], op1[10], op2[10];
   int i, rd, rs1, rs2, out;
@@ -58,6 +58,7 @@ main()
 	case 24: out = 0x14000000 | rs1 | rs2 | rd;  break;   // LDW
 	case 25: out = 0x14000100 | rs1 | rs2 | rd;  break;   // STW
 	case 29: out = 0x74000000 | rs1 | rs2; break; // LUI
+	case 30: out = 0x18000000; break; // Noop
 	default: out = 0;
 	}
 	printf ("%08x", out);
