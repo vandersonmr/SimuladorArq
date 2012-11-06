@@ -119,13 +119,12 @@ void CPU_Busca()
 {
 	word data = 0;
 	int PC = BANCO_GetPc();
-		data = MEMORIA_Carregue(PC);
-		CPU_SetBusca2Decodificacao(PC, data);
-
-		if (decodificacao2execucao.Jump)
-			BANCO_SetPc(decodificacao2execucao.Pc);
-		else
-			BANCO_SetPc(BANCO_GetPc() + 1);
+	data = MEMORIA_Carregue(PC);
+	CPU_SetBusca2Decodificacao(PC, data);
+	if (decodificacao2execucao.Jump)
+		BANCO_SetPc(decodificacao2execucao.Pc);
+	else
+		BANCO_SetPc(BANCO_GetPc() + 1);
 
 	
 }
@@ -133,7 +132,7 @@ void CPU_Busca()
 int main(){
 	MEMORIA_CarregueArquivo("codigo.src");
 	CPU_Inicializacao();
-	BANCO_SetRegister(0,10);
+	BANCO_SetRegister(0,11);
 	BANCO_SetRegister(1,14);
 	CPU_Execute();
 	
@@ -146,7 +145,8 @@ int main(){
 void CPU_Decodificacao()
 {
 	decodifica(busca2decodificacao.Instruction
-			,&decodificacao2execucao);
+			,&decodificacao2execucao,BANCO_GetPc());
+
 }
 
 /* execucao de instrucao */

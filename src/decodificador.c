@@ -20,12 +20,16 @@ uint32 src2Reg;
 void carregaRegistradores(){
 	
         if(formato==0){
-                dec2exec->src1Reg
-                         = BANCO_GetRegister(
-                                dec2exec->src1Reg);
-                dec2exec->src2Reg
-                         = BANCO_GetRegister(
-                                dec2exec->src2Reg);
+	        	dec2exec->src1Reg
+                        	= BANCO_GetRegister(
+                                	dec2exec->src1Reg);
+                	dec2exec->src2Reg
+                        	 = BANCO_GetRegister(
+                                	dec2exec->src2Reg);
+		if(class=4){
+			dec2exec->src2Reg = 1;
+			dec2exec->Pc=dec2exec->src1Reg;
+		}
         }else if(formato==1){
                 dec2exec->src1Reg
 			= BANCO_GetRegister(
@@ -47,10 +51,11 @@ void limpaSaida(){
         dec2exec->Jump=0;
 }
 
-void decodifica(uint32 data, CONTROLE_DE * regControle)
+void decodifica(uint32 data, CONTROLE_DE * regControle,uint32 Pc)
 {
 	dec2exec = regControle;
 	limpaSaida();
+	dec2exec->Pc = Pc;
 	wData = data;
 	dec2exec->acessaMemoria=-1;
 	uint32 mask = 0xC0000000;
@@ -87,6 +92,9 @@ int32 decodificaOpcode(){
 						= opcode;
 
 				return 16;
+			case 4:
+				dec2exec->Jump=1;	
+				return 0;
                         case 5:
                         case 6:
 				dec2exec->targetReg = 1000;

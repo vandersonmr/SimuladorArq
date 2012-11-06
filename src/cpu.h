@@ -30,11 +30,13 @@ typedef struct CONTROLE_EM {
 	unsigned long int targetReg;
 	unsigned long int src2Reg;
 	unsigned long int acessaMemoria;
+	unsigned long int Pc;
 }CONTROLE_EM;
 
 typedef struct CONTROLE_MR {
 	unsigned long int ulaResult;
 	unsigned long int targetReg;
+	unsigned long int Pc;
 }CONTROLE_MR; 
 
 #endif 
