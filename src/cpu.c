@@ -133,7 +133,7 @@ int main(){
 	MEMORIA_CarregueArquivo("codigo.src");
 	CPU_Inicializacao();
 	BANCO_SetRegister(0,11);
-	BANCO_SetRegister(1,14);
+	BANCO_SetRegister(1,11);
 	CPU_Execute();
 	
 	

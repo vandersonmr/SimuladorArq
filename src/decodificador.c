@@ -31,6 +31,8 @@ void carregaRegistradores(){
 			uint32 aux = dec2exec->Pc;
 			dec2exec->Pc=dec2exec->src1Reg;
 			dec2exec->src1Reg=aux;
+		}else if(class==7){
+			dec2exec->Pc = BANCO_GetRegister(31);
 		}
         }else if(formato==1){	
                 dec2exec->src1Reg
@@ -108,7 +110,9 @@ int32 decodificaOpcode(){
                                 return 16;
                         case 7:
                                 dec2exec->Jump=1;
+				dec2exec->targetReg=1000;
                                 return 16;
+			
                 }
         }else if(formato==1) {
                 if(opcode==15){
