@@ -88,8 +88,9 @@ int32 decodificaOpcode(){
                         case 0:
                                 return opcode;
                         case 1:
-                                return opcode+6;
+                                return opcode + 6;
                         case 2:
+				return opcode + 18;
                         case 3: 
 				dec2exec->acessaMemoria
 						= opcode;
