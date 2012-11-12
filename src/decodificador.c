@@ -16,6 +16,7 @@ uint32 formato;
 uint32 opcode;
 uint32 class;
 uint32 src2Reg;
+uint32 imediato;
 
 void carregaRegistradores(){
 	
@@ -38,11 +39,20 @@ void carregaRegistradores(){
                 dec2exec->src1Reg
 			= BANCO_GetRegister(
 				dec2exec->src1Reg);
-		
+		dec2exec->src2Reg
+			= imediato;
+		if(opcode==14){
+			dec2exec->src1Reg 
+				= BANCO_GetPc();
+		}		
+		 
         }else if(formato==2){
                 // !TODO
         }else if(formato==3){
-                // !TODO
+                dec2exec->src1Reg 
+			= BANCO_GetPc();
+		dec2exec->src2Reg
+			= 1;
         }
 }
 
@@ -104,21 +114,20 @@ int32 decodificaOpcode(){
 			case 4:
 				dec2exec->Jump=1;	
 				return 0;
-                        case 5:
                         case 6:
 				dec2exec->targetReg = 1000;
                                 return 16;
-                        case 7:
+                        case 5:
                                 dec2exec->Jump=1;
 				dec2exec->targetReg=1000;
                                 return 16;
 			
                 }
         }else if(formato==1) {
-                if(opcode==15){
-                        dec2exec->Jump=1;
-			
-                        return 16;
+                if(opcode==14){
+			dec2exec->targetReg
+					= 33;                       
+                        return 0;
                 }else if(opcode==13){
 			return 17;
 		}else{
@@ -128,7 +137,10 @@ int32 decodificaOpcode(){
 
         }else if(formato==3){
                 dec2exec->Jump=1;
-                return 16;
+		dec2exec->targetReg
+			= 31;
+		dec2exec->Pc=imediato; 
+                return 0;
         }
 }
 
@@ -158,7 +170,7 @@ void decodificaFormato2()
 	opcode = wData & classMask;
 	uint32 src1Reg = wData & src1RegMask;
 	uint32 targetReg = wData & src2RegMask;
-	uint32 imediato = wData & imediatoMask1;
+	imediato = wData & imediatoMask1;
 
 	opcode = opcode >> 26;
 	src1Reg = src1Reg >> 21;
@@ -179,6 +191,7 @@ void decodificaFormato3()
 
 void decodificaFormato4()
 {
-	uint32 imediato = wData & imediato;
+	uint32 imediato = wData & imediatoMask2;
+	imediato = imediato >> 2;
 }
 

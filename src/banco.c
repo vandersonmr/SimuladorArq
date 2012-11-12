@@ -22,14 +22,18 @@ void BANCO_Finalizacao()
 /* armazena dados no resgistrador */
 void BANCO_SetRegister(uint32 address, int32 data)
 {
-	if (address >= 0 & address <= numRegs)
+	if(address == 33)
+		BANCO_SetPc(data);
+	else if (address >= 0 & address <= numRegs)
 		registers[address] = data;
 }
 
 /* retorna dado de um determinado registrador */
 int32 BANCO_GetRegister(uint32 address)
 {
-	if (address >= 0 & address <= numRegs)
+	if(address==33)
+		return BANCO_GetPc();
+	else if (address >= 0 & address <= numRegs)
 		return registers[address];
 }
 
