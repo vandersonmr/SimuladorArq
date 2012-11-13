@@ -19,6 +19,7 @@ typedef struct CONTROLES_DE {
         unsigned long int src2Reg;
         unsigned long int targetReg;
 	unsigned long int acessaMemoria;
+	unsigned long int formato;
 	int Jump;
 }CONTROLE_DE;
 
@@ -34,6 +35,7 @@ typedef struct CONTROLE_EM {
 }CONTROLE_EM;
 
 typedef struct CONTROLE_MR {
+	unsigned long int formato;
 	unsigned long int ulaResult;
 	unsigned long int targetReg;
 	unsigned long int Pc;

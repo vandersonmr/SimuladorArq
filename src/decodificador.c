@@ -47,7 +47,12 @@ void carregaRegistradores(){
 		}		
 		 
         }else if(formato==2){
-                // !TODO
+		 dec2exec->src1Reg
+                                = BANCO_GetRegister(
+                                        dec2exec->src1Reg);
+                 dec2exec->src2Reg
+                                = BANCO_GetRegister(
+                                        dec2exec->src2Reg);
         }else if(formato==3){
                 dec2exec->src1Reg 
 			= BANCO_GetPc();
@@ -64,6 +69,7 @@ void limpaSaida(){
         dec2exec->targetReg=0;
         dec2exec->acessaMemoria=0;
         dec2exec->Jump=0;
+	dec2exec->formato=0;
 }
 
 void decodifica(uint32 data, CONTROLE_DE * regControle,uint32 Pc)
@@ -91,6 +97,7 @@ void decodifica(uint32 data, CONTROLE_DE * regControle,uint32 Pc)
 		break;
 	}
 	carregaRegistradores();
+	dec2exec->formato=formato;
 }
 
 
@@ -134,7 +141,7 @@ int32 decodificaOpcode(){
                         return opcode;
                 }
         }else if(formato==2){
-
+		return 18+opcode;
         }else if(formato==3){
                 dec2exec->Jump=1;
 		dec2exec->targetReg
@@ -186,7 +193,9 @@ void decodificaFormato2()
 void decodificaFormato3()
 {
 	decodificaFormato2();
-	//modifica valores !TODO
+	uint32 aux = dec2exec->src2Reg;
+	dec2exec->src2Reg = dec2exec->targetReg;
+	dec2exec->targetReg=aux;
 }
 
 void decodificaFormato4()
