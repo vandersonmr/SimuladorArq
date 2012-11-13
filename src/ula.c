@@ -68,7 +68,8 @@ int32 ULA_execute(int32 A, int32 B, uint32 tarefa)
 		local = A;
 		break;
 	case 17:
-		local = B;	//nop;
+		local = B;
+		break;	//nop;
 	case 18:
 		local = (A == B) ? 1 : 0;
 		break;
