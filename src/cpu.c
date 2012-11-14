@@ -63,57 +63,6 @@ void CPU_SetBusca2Decodificacao(uint32 Pc, uint32 Instruction)
 	busca2decodificacao.Instruction = Instruction;
 }
 
-/* atualiza barreira entre decodificacao e execucao */
-void
-CPU_SetDecoficao2Execucao(uint32 ALU,
-			  uint32 LS,
-			  uint32 ENC,
-			  uint32 C,
-			  uint32 B, uint32 A, uint32 I, uint32 RB, uint32 RA)
-{
-	decodificacao2execucao.ALU = ALU;
-}
-
-/* atualiza barreira entre execucao e acesso a memoria */
-void CPU_SetExecucao2Memoria()
-{
-	
-}
-
-/* atualiza barreira entre memoria e resultado */
-void CPU_SetMemoria2Resultado()
-{
-
-}
-
-/* limpa barreira entre busca e decodificacao */
-void CPU_LimpaBusca2Decodificacao()
-{
-
-	busca2decodificacao.Pc = 0;
-	busca2decodificacao.Instruction = 0;
-
-}
-
-/* limpa barreira entre decodificacao e execucao */
-void CPU_LimpaDecodificacao2Execucao()
-{
-
-}
-
-/* limpa barreira entre execucao e acesso a memoria */
-void CPU_LimpaExecucao2Memoria()
-{
-
-}
-
-/* limpa barreira entre execucao e acesso a memoria */
-void CPU_LimpaMemoria2Resultado()
-{
-
-}
-
-
 /* busca de instrucao */
 void CPU_Busca()
 {
@@ -132,8 +81,6 @@ void CPU_Busca()
 int main(){
 	MEMORIA_CarregueArquivo("codigo.src");
 	CPU_Inicializacao();
-	BANCO_SetRegister(0,11);
-	BANCO_SetRegister(1,11);
 	CPU_Execute();
 	
 	
@@ -166,52 +113,6 @@ void CPU_Memoria()
 void CPU_Resultado()
 {
 	escreveResultado(memoria2resultado);
-}
-
-int CPU_Compare(int reg1, int reg2, int opcode)
-{
-	int local = 0;
-
-	switch (opcode) {
-	case 0:
-		local = (reg1 == reg2) ? 1 : 0;
-		break;
-	case 1:
-		local = (reg1 != reg2) ? 1 : 0;
-		break;
-	case 2:
-		local = (reg1 < reg2) ? 1 : 0;
-		break;
-	case 3:
-		local = ((unsigned)reg1 < (unsigned)reg2) ? 1 : 0;
-		break;
-	case 4:
-		local = (reg1 <= reg2) ? 1 : 0;
-		break;
-	case 5:
-		local = ((unsigned)reg1 <= (unsigned)reg2) ? 1 : 0;
-		break;
-	case 6:
-		local = (reg1 > reg2) ? 1 : 0;
-		break;
-	case 7:
-		local = ((unsigned)reg1 > (unsigned)reg2) ? 1 : 0;
-		break;
-	case 8:
-		local = (reg1 >= reg2) ? 1 : 0;
-		break;
-	case 9:
-		local = ((unsigned)reg1 >= (unsigned)reg2) ? 1 : 0;
-		break;
-	case 10:
-		local = (reg1 == 1) ? 1 : 0;
-		break;
-	case 11:
-		local = (reg1 == 0) ? 1 : 0;
-		break;
-	}
-	return local;
-
 }
 
 void CPU_Imprime()

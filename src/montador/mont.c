@@ -53,15 +53,17 @@ main()
 				else if(i<=15)
 					out = 0x04000000 
                                                 | rs1 | rs2 | rd | ((i-6) << 6);
-				else if(i<=26)
+				else if(i<=25)
 					out = 0x08000000 
                                                 | rs1 | rs2 | rd | ((i-16) << 6);
-                                else if(i<=32)
+                                else if(i<=31)
 					out = 0x0C000000 
-                                                | rs1 | rs2 | rd | ((i-27) << 6);
-				else if(i==33)
+                                                | rs1 | rs2 | rd | ((i-26) << 6);
+				else if(i==32)
 					 out = 0x10000000 
                                                 | rs1 | rs2 | rd;
+				else if(i==33)
+					out = 0x14000000;
 				else if(i==34)
 					out = 0x18000000;
 				else if(i<=49)
