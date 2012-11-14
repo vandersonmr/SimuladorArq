@@ -2,67 +2,79 @@
 #include <stdlib.h>
 #include <strings.h>
 
-#define N_INST 31
+#define N_INST 63
 
 main()
 {
-  char instrucoes[N_INST][6] = {"JMP","ADD","ADDU","SUB","SUBU","MUL","MULU","AND","OR","XOR","NOT","LSL","LSR","ASR","SEQ","SNE","SLT","SLTU","SLE","SLEU","SGT","SGTU","SGE","SGEU","LDW","STW","JMPL","RET","CALL","LUI","noop"};
+	char instrucoes[N_INST][6] =
+	    { "ADD", "ADDU", "SUB", "SUBU", "MUL", "MULU", "AND", "OR", "XOR",
+"NAND", "NOR", "NXOR", "NOT", "LSL", "LSR", "ASR", "SEQ", "SNE", "SLT", "SLTU", "SLE",
+"SLEU", "SQT", "SGTU", "SGE", "SGEU", "LDB", "LDS", "LDW", "STB", "STS" ,"STW","JMPL",
+"RET","Noop","ADDI","ADDUI","SUBI","SUBUI","ANDI","ORI","XORI","NANDI","NORI","XNORI",
+"LSLI","LSRI","ASRI","LUI","JMP","BEQ","BNE","BLT","BLTU","BLE","BLEU","BGT","BGTU",
+"BGE","BGEU","BRT","BRF","CALL"};
 
-  char inst[10], dest[10], op1[10], op2[10];
-  int i, rd, rs1, rs2, out;
+	char inst[10], dest[10], op1[10], op2[10];
+	int i, rd, rs1, rs2, out;
 
-  while (scanf ("%s %s %s %s", inst, op1, op2, dest) != EOF) {
-    //printf("%s %s %s %s\n", inst, op1, op2, dest);
-    for (i = 0; i < N_INST; i++) 
-      if (!strcasecmp (instrucoes[i], inst)) {
-	if (*dest == 'r') rd = atoi (&dest[1]);
-	else rd = atoi (dest);
-	if (*op1 == 'r') rs1 = atoi (&op1[1]);
-	else rs1 = atoi (op1);
-	if (*op2 == 'r') rs2 = atoi (&op2[1]);
-	else rs2 = atoi (op2);
+	while (scanf("%s %s %s %s", inst, op1, op2, dest) != EOF) {
+		//printf("%s %s %s %s\n", inst, op1, op2, dest);
+		for (i = 0; i < N_INST; i++)
+			if (!strcasecmp(instrucoes[i], inst)) {
+				if (*dest == 'r')
+					rd = atoi(&dest[1]);
+				else
+					rd = atoi(dest);
+				if (*op1 == 'r')
+					rs1 = atoi(&op1[1]);
+				else
+					rs1 = atoi(op1);
+				if (*op2 == 'r')
+					rs2 = atoi(&op2[1]);
+				else
+					rs2 = atoi(op2);
 
-	if (i > 0 && i < 27) {
-	  rs1 = rs1 << 21;
-	  rs2 = rs2 << 16;
-	  rd = rd << 11;
-	}
-	else
-	  rs1 = rs1 << 16;
+				if (i >= 0 && i < 35) {	//Formato 1
+					rs1 = rs1 << 21;
+					rs2 = rs2 << 16;
+					rd = rd << 11;
+				} else if(i<62){ //Formato 2 e 3
+					rs1 = rs1 << 21;
+					rs2 = rs2 << 16;
+				}
+				else{ // formato 4
+					
+				}
 	
-	switch (i) {
-	case  0: out = 0x7C000000 | rd;  break;               // JMP
-	case  1: out = 0x04000000 | rs1 | rs2 | rd;  break;   // ADD
-	case  2: out = 0x04000040 | rs1 | rs2 | rd;  break;   // ADDU
-	case  3: out = 0x04000080 | rs1 | rs2 | rd;  break;   // SUB
-	case  4: out = 0x040000C0 | rs1 | rs2 | rd;  break;   // SUBU
-	case  5: out = 0x04000100 | rs1 | rs2 | rd;  break;   // MUL
-	case  6: out = 0x04000140 | rs1 | rs2 | rd;  break;   // MULU
-	case  7: out = 0x08000000 | rs1 | rs2 | rd;  break;   // AND
-	case  8: out = 0x08000040 | rs1 | rs2 | rd;  break;   // OR
-	case  9: out = 0x08000080 | rs1 | rs2 | rd;  break;   // XOR
-	case 10: out = 0x080000C0 | rs1 | rs2 | rd;  break;   // NOT
-	case 11: out = 0x08000100 | rs1 | rs2 | rd;  break;   // LSL
-	case 12: out = 0x08000140 | rs1 | rs2 | rd;  break;   // LSR
-	case 13: out = 0x08000180 | rs1 | rs2 | rd;  break;   // ASR
-	case 14: out = 0x0C000000 | rs1 | rs2 | rd;  break;   // SEQ
-	case 15: out = 0x0C000040 | rs1 | rs2 | rd;  break;   // SNE
-	case 16: out = 0x0C000080 | rs1 | rs2 | rd;  break;   // SLT
-	case 17: out = 0x0C0000C0 | rs1 | rs2 | rd;  break;   // SLTU
-	case 18: out = 0x0C000100 | rs1 | rs2 | rd;  break;   // SLE
-	case 19: out = 0x0C000140 | rs1 | rs2 | rd;  break;   // SLEU
-	case 20: out = 0x0C000180 | rs1 | rs2 | rd;  break;   // SGT
-	case 21: out = 0x0C0001C0 | rs1 | rs2 | rd;  break;   // SGTU
-	case 22: out = 0x0C000400 | rs1 | rs2 | rd;  break;   // SGE
-	case 23: out = 0x0C000440 | rs1 | rs2 | rd;  break;   // SGEU
-	case 24: out = 0x14000000 | rs1 | rs2 | rd;  break;   // LDW
-	case 25: out = 0x14000100 | rs1 | rs2 | rd;  break;   // STW
-	case 29: out = 0x74000000 | rs1 | rs2; break; // LUI
-	case 30: out = 0x18000000; break; // Noop
-	default: out = 0;
+				if(i>=0){
+				if(i<=5) 
+					out = 0x00000000 
+						| rs1 | rs2 | rd | (i << 6);
+				else if(i<=15)
+					out = 0x04000000 
+                                                | rs1 | rs2 | rd | ((i-6) << 6);
+				else if(i<=26)
+					out = 0x08000000 
+                                                | rs1 | rs2 | rd | ((i-16) << 6);
+                                else if(i<=32)
+					out = 0x0C000000 
+                                                | rs1 | rs2 | rd | ((i-27) << 6);
+				else if(i==33)
+					 out = 0x10000000 
+                                                | rs1 | rs2 | rd;
+				else if(i==34)
+					out = 0x18000000;
+				else if(i<=49)
+					out = 0x40000000 
+						| rs1 | rs2 | rd | ((i-35)<<26);
+				else if(i<=61)
+					out = 0x80000000
+                                                | rs1 | rs2 | rd | ((i-50)<<26);
+				else if(i==62)
+					out = 0xC0000000 | rd;
+				}
+				printf("%08x", out);
+			}
 	}
-	printf ("%08x", out);
-      }
-  }
 	printf("\n");
 }
