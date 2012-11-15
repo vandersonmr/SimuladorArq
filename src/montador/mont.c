@@ -8,11 +8,16 @@ main()
 {
 	char instrucoes[N_INST][6] =
 	    { "ADD", "ADDU", "SUB", "SUBU", "MUL", "MULU", "AND", "OR", "XOR",
-"NAND", "NOR", "NXOR", "NOT", "LSL", "LSR", "ASR", "SEQ", "SNE", "SLT", "SLTU", "SLE",
-"SLEU", "SQT", "SGTU", "SGE", "SGEU", "LDB", "LDS", "LDW", "STB", "STS" ,"STW","JMPL",
-"RET","Noop","ADDI","ADDUI","SUBI","SUBUI","ANDI","ORI","XORI","NANDI","NORI","XNORI",
-"LSLI","LSRI","ASRI","LUI","JMP","BEQ","BNE","BLT","BLTU","BLE","BLEU","BGT","BGTU",
-"BGE","BGEU","BRT","BRF","CALL"};
+		"NAND", "NOR", "NXOR", "NOT", "LSL", "LSR", "ASR", "SEQ", "SNE",
+		    "SLT", "SLTU", "SLE",
+		"SLEU", "SQT", "SGTU", "SGE", "SGEU", "LDB", "LDS", "LDW",
+		    "STB", "STS", "STW", "JMPL",
+		"RET", "Noop", "ADDI", "ADDUI", "SUBI", "SUBUI", "ANDI", "ORI",
+		    "XORI", "NANDI", "NORI", "XNORI",
+		"LSLI", "LSRI", "ASRI", "LUI", "JMP", "BEQ", "BNE", "BLT",
+		    "BLTU", "BLE", "BLEU", "BGT", "BGTU",
+		"BGE", "BGEU", "BRT", "BRF", "CALL"
+	};
 
 	char inst[10], dest[10], op1[10], op2[10];
 	int i, rd, rs1, rs2, out;
@@ -38,42 +43,46 @@ main()
 					rs1 = rs1 << 21;
 					rs2 = rs2 << 16;
 					rd = rd << 11;
-				} else if(i<62){ //Formato 2 e 3
+				} else if (i < 62) {	//Formato 2 e 3
 					rs1 = rs1 << 21;
 					rs2 = rs2 << 16;
+				} else {	// formato 4
+
 				}
-				else{ // formato 4
-					
-				}
-	
-				if(i>=0){
-				if(i<=5) 
-					out = 0x00000000 
-						| rs1 | rs2 | rd | (i << 6);
-				else if(i<=15)
-					out = 0x04000000 
-                                                | rs1 | rs2 | rd | ((i-6) << 6);
-				else if(i<=25)
-					out = 0x08000000 
-                                                | rs1 | rs2 | rd | ((i-16) << 6);
-                                else if(i<=31)
-					out = 0x0C000000 
-                                                | rs1 | rs2 | rd | ((i-26) << 6);
-				else if(i==32)
-					 out = 0x10000000 
-                                                | rs1 | rs2 | rd;
-				else if(i==33)
-					out = 0x14000000;
-				else if(i==34)
-					out = 0x18000000;
-				else if(i<=49)
-					out = 0x40000000 
-						| rs1 | rs2 | rd | ((i-35)<<26);
-				else if(i<=61)
-					out = 0x80000000
-                                                | rs1 | rs2 | rd | ((i-50)<<26);
-				else if(i==62)
-					out = 0xC0000000 | rd;
+
+				if (i >= 0) {
+					if (i <= 5)
+						out = 0x00000000
+						    | rs1 | rs2 | rd | (i << 6);
+					else if (i <= 15)
+						out = 0x04000000
+						    | rs1 | rs2 | rd | ((i - 6)
+									<< 6);
+					else if (i <= 25)
+						out = 0x08000000
+						    | rs1 | rs2 | rd | ((i - 16)
+									<< 6);
+					else if (i <= 31)
+						out = 0x0C000000
+						    | rs1 | rs2 | rd | ((i - 26)
+									<< 6);
+					else if (i == 32)
+						out = 0x10000000
+						    | rs1 | rs2 | rd;
+					else if (i == 33)
+						out = 0x14000000;
+					else if (i == 34)
+						out = 0x18000000;
+					else if (i <= 49)
+						out = 0x40000000
+						    | rs1 | rs2 | rd | ((i - 35)
+									<< 26);
+					else if (i <= 61)
+						out = 0x80000000
+						    | rs1 | rs2 | rd | ((i - 50)
+									<< 26);
+					else if (i == 62)
+						out = 0xC0000000 | rd;
 				}
 				printf("%08x", out);
 			}
