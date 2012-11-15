@@ -77,6 +77,7 @@ void CPU_Busca()
 
 int main()
 {
+	
 	MEMORIA_CarregueArquivo("codigo.src");
 	CPU_Inicializacao();
 	CPU_Execute();

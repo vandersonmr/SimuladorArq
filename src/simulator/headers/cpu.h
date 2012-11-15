@@ -15,8 +15,8 @@ typedef struct CONTROLE_BD  {
 typedef struct CONTROLES_DE {
         unsigned long int Pc;
         unsigned long int ALU;
-        unsigned long int src1Reg;
-        unsigned long int src2Reg;
+        long int src1Reg;
+        long int src2Reg;
         unsigned long int targetReg;
 	unsigned long int acessaMemoria;
 	unsigned long int formato;
@@ -29,14 +29,14 @@ typedef struct CONTROLE_EM {
 	unsigned long int opclass;
 	unsigned long int formato;
 	unsigned long int targetReg;
-	unsigned long int src2Reg;
+	long int src2Reg;
 	unsigned long int acessaMemoria;
 	unsigned long int Pc;
 }CONTROLE_EM;
 
 typedef struct CONTROLE_MR {
 	unsigned long int formato;
-	unsigned long int ulaResult;
+	long int ulaResult;
 	unsigned long int targetReg;
 	unsigned long int Pc;
 }CONTROLE_MR; 

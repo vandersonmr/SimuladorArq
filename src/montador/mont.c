@@ -20,11 +20,14 @@ main()
 	};
 
 	char inst[10], dest[10], op1[10], op2[10];
-	int i, rd, rs1, rs2, out;
+	unsigned short int uRd;
+	
+	int out,rs1,rs2,i,rd;
 
 	while (scanf("%s %s %s %s", inst, op1, op2, dest) != EOF) {
 		//printf("%s %s %s %s\n", inst, op1, op2, dest);
-		for (i = 0; i < N_INST; i++)
+	
+	for (i = 0; i < N_INST; i++)
 			if (!strcasecmp(instrucoes[i], inst)) {
 				if (*dest == 'r')
 					rd = atoi(&dest[1]);
@@ -38,7 +41,7 @@ main()
 					rs2 = atoi(&op2[1]);
 				else
 					rs2 = atoi(op2);
-
+				
 				if (i >= 0 && i < 35) {	//Formato 1
 					rs1 = rs1 << 21;
 					rs2 = rs2 << 16;
@@ -46,6 +49,7 @@ main()
 				} else if (i < 62) {	//Formato 2 e 3
 					rs1 = rs1 << 21;
 					rs2 = rs2 << 16;
+					uRd=atoi(dest); 
 				} else {	// formato 4
 
 				}
@@ -75,11 +79,11 @@ main()
 						out = 0x18000000;
 					else if (i <= 49)
 						out = 0x40000000
-						    | rs1 | rs2 | rd | ((i - 35)
+						    | rs1 | rs2 | uRd | ((i - 35)
 									<< 26);
 					else if (i <= 61)
 						out = 0x80000000
-						    | rs1 | rs2 | rd | ((i - 50)
+						    | rs1 | rs2 | uRd | ((i - 50)
 									<< 26);
 					else if (i == 62)
 						out = 0xC0000000 | rd;

@@ -49,6 +49,7 @@ uint32 MEMORIA_CarregueData(uint32 address)
 		return mD[address];
 }
 
+
 void MEMORIA_CarregueArquivo(char *file)
 {
 	if (file == NULL) {

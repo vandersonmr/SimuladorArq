@@ -6,7 +6,7 @@
 CONTROLE_EM *outData;
 CONTROLE_DE inData;
 
-uint32 src1, src2, op;
+int32 src1, src2, op;
 
 int32 executaUla()
 {

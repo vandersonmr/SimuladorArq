@@ -12,24 +12,25 @@ void acessaMemoria(CONTROLE_EM inData, CONTROLE_MR * outData)
 	outData->ulaResult = inData.ulaResult;
 	outData->targetReg = inData.targetReg;
 	int aux;
-	uint32 local;
+	uint32 uLocal;
+	int32 local;
 	switch (inData.acessaMemoria) {
 	case 0:		//Lê 1 byte da memória
-		local = MEMORIA_CarregueData(inData.ulaResult);
+		uLocal = MEMORIA_CarregueData(inData.ulaResult);
 		aux = outData->ulaResult;
-		local = local & maskByte;
+		local = uLocal & maskByte;
 		aux = aux & notMaskByte;
-		outData->ulaResult = aux | local;
+		outData->ulaResult = aux | uLocal;
 		break;
 	case 1:		//Lê 2 bytes da memória
-		local = MEMORIA_CarregueData(inData.ulaResult);
+		uLocal = MEMORIA_CarregueData(inData.ulaResult);
 		aux = outData->ulaResult;
-		local = local & maskDouble;
+		uLocal = uLocal & maskDouble;
 		aux = aux & notMaskDouble;
-		outData->ulaResult = aux | local;
+		outData->ulaResult = aux | uLocal;
 		break;
 	case 2:		//Lê 4 bytes da memória
-		local = MEMORIA_CarregueData(inData.ulaResult);
+		local = (int32) MEMORIA_CarregueData(inData.ulaResult);
 		outData->ulaResult = local;
 		break;
 	case 3:		//Escreve 1 byte na memória
@@ -38,7 +39,7 @@ void acessaMemoria(CONTROLE_EM inData, CONTROLE_MR * outData)
 	case 4:		//Escreve 2 bytes na memória
 		break;
 	case 5:		//Escreve 4 bytes na memória
-		MEMORIA_ArmazeneData(inData.ulaResult, inData.src2Reg);
+		MEMORIA_ArmazeneData(inData.ulaResult, (uint32) inData.src2Reg);
 
 		outData->targetReg = -1;
 		break;

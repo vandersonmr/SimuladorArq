@@ -15,8 +15,9 @@ CONTROLE_DE *dec2exec;
 uint32 formato;
 uint32 opcode;
 uint32 class;
-uint32 src2Reg;
-uint32 imediato;
+int32 src1Reg;
+int32 src2Reg;
+int32 imediato;
 
 void carregaRegistradores(){
 	
@@ -155,7 +156,7 @@ int32 decodificaOpcode(){
 void decodificaFormato1()
 {
 	class = wData & classMask;
-	uint32 src1Reg = wData & src1RegMask;
+	src1Reg = wData & src1RegMask;
 	src2Reg = wData & src2RegMask;
 	uint32 targetReg = wData & targetRegMask;
 	opcode = wData & opMask;
@@ -175,10 +176,11 @@ void decodificaFormato1()
 void decodificaFormato2()
 {
 	opcode = wData & classMask;
-	uint32 src1Reg = wData & src1RegMask;
+	src1Reg = wData & src1RegMask;
 	uint32 targetReg = wData & src2RegMask;
-	imediato = wData & imediatoMask1;
-
+	unsigned short int imediato2 = wData & imediatoMask1;
+	
+	imediato = (short int) imediato2;
 	opcode = opcode >> 26;
 	src1Reg = src1Reg >> 21;
 	targetReg = targetReg >> 16;
