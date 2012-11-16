@@ -21,7 +21,7 @@ main()
 
 	char inst[10], dest[10], op1[10], op2[10];
 	unsigned short int uRd;
-	
+        unsigned int aux;	
 	int out,rs1,rs2,i,rd;
 
 	while (scanf("%s %s %s %s", inst, op1, op2, dest) != EOF) {
@@ -51,7 +51,14 @@ main()
 					rs2 = rs2 << 16;
 					uRd=atoi(dest); 
 				} else {	// formato 4
-
+					rd = atoi(dest);
+					printf("%d\n",rd);
+					aux = (unsigned int) rd;
+					if(rd > 0){
+					
+					}
+					
+					printf("%u\n",aux);					
 				}
 
 				if (i >= 0) {

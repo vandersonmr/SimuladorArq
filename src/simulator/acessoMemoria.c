@@ -34,9 +34,18 @@ void acessaMemoria(CONTROLE_EM inData, CONTROLE_MR * outData)
 		outData->ulaResult = local;
 		break;
 	case 3:		//Escreve 1 byte na memória
-
+                local = MEMORIA_CarregueData(inData.ulaResult);
+                inData.src2Reg = inData.src2Reg & 0x000000FF;
+                local = local & 0xFFFFFF00;
+                MEMORIA_ArmazeneData(inData.ulaResult, (uint32) inData.src2Reg | local);
+                outData->targetReg = -1;
 		break;
 	case 4:		//Escreve 2 bytes na memória
+		local = MEMORIA_CarregueData(inData.ulaResult);
+		inData.src2Reg = inData.src2Reg & 0x0000FFFF;
+		local = local & 0xFFFF0000;
+		MEMORIA_ArmazeneData(inData.ulaResult, (uint32) inData.src2Reg | local);
+                outData->targetReg = -1;
 		break;
 	case 5:		//Escreve 4 bytes na memória
 		MEMORIA_ArmazeneData(inData.ulaResult, (uint32) inData.src2Reg);
