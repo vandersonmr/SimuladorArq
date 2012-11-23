@@ -52,13 +52,10 @@ main()
 					uRd=atoi(dest); 
 				} else {	// formato 4
 					rd = atoi(dest);
-					printf("%d\n",rd);
 					aux = (unsigned int) rd;
 					if(rd > 0){
 					
 					}
-					
-					printf("%u\n",aux);					
 				}
 
 				if (i >= 0) {
