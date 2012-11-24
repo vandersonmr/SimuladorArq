@@ -21,7 +21,6 @@ CONTROLE_MR memoria2resultado;
 /* inicializacao */
 void CPU_Inicializacao()
 {
-
 	/* inicializacao dos contadores */
 	arithop = 0;
 	setop = 0;
@@ -34,24 +33,56 @@ void CPU_Inicializacao()
 	memoria2resultado.targetReg = -1;
 	/* INSTANCIACAO DOS COMPONENTES INTERNOS */
 	BANCO_Inicializacao();
+}
 
+void Ini_DE(){
+	decodificacao2execucao.Pc = 0;
+        decodificacao2execucao.ALU = 16;
+        decodificacao2execucao.src1Reg = 0;
+        decodificacao2execucao.src2Reg = 0;
+        decodificacao2execucao.targetReg = 1000;
+        decodificacao2execucao.acessaMemoria = 18446744073709551615;
+        decodificacao2execucao.formato = 0;
+        decodificacao2execucao.Jump = 0;
+}
+void Ini_EM(){
+        execucao2memoria.ulaResult = 0;
+        execucao2memoria.opcode = 0;
+        execucao2memoria.opclass = 0;
+        execucao2memoria.formato = 0;
+        execucao2memoria.targetReg = 1000;
+        execucao2memoria.src2Reg = 0;
+        execucao2memoria.acessaMemoria = 18446744073709551615;
+	execucao2memoria.Pc = 0;
+}
+void Ini_MR(){
+	memoria2resultado.formato = 0;
+	memoria2resultado.ulaResult = 0;
+	memoria2resultado.targetReg = 1000;
+	memoria2resultado.Pc = 0;
+}
+
+void CPU_LimpaSinais(){
+	Ini_DE();
+	Ini_EM();
+	Ini_MR();
 }
 
 void CPU_Execute()
 {
 	int i = 0;
 	for (i = 0; i < MEMORY_W; i++) {
-		CPU_Resultado();
-		CPU_Memoria();
-		CPU_Execucao();
-		CPU_Decodificacao();
-		CPU_Busca();
+		int esvaziaPipe = CPU_Resultado();
+		if(!esvaziaPipe){
+			CPU_Memoria();
+			CPU_Execucao();
+			CPU_Decodificacao();
+		}else{
+			CPU_LimpaSinais();
+		}
+			CPU_Busca();
+		
 	}
-}
-
-void CPU_Finalizacao()
-{
-
 }
 
 /* atualiza barreira entre busca e decodificacao */
@@ -76,8 +107,7 @@ void CPU_Busca()
 }
 
 int main()
-{
-	
+{	
 	MEMORIA_CarregueArquivo("codigo.src");
 	CPU_Inicializacao();
 	CPU_Execute();
@@ -89,9 +119,8 @@ int main()
 /* decodificacao de instrucao */
 void CPU_Decodificacao()
 {
-	decodifica(busca2decodificacao.Instruction, &decodificacao2execucao,
-		   BANCO_GetPc());
-
+		decodifica(busca2decodificacao.Instruction, &decodificacao2execucao,
+			   BANCO_GetPc());
 }
 
 /* execucao de instrucao */
@@ -107,10 +136,11 @@ void CPU_Memoria()
 }
 
 /* escrita do resultado */
-void CPU_Resultado()
+int CPU_Resultado()
 {
-	escreveResultado(memoria2resultado);
+	return escreveResultado(memoria2resultado);
 }
+
 
 void CPU_Imprime()
 {

@@ -8,4 +8,4 @@ Noop 0 0 0
 Noop 0 0 0
 Noop 0 0 0
 BNE r2 r3 -6
-Noop 0 0 0
+SUBI r2 r2 5
