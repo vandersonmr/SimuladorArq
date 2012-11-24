@@ -11,6 +11,8 @@ void acessaMemoria(CONTROLE_EM inData, CONTROLE_MR * outData)
 	outData->formato = inData.formato;
 	outData->ulaResult = inData.ulaResult;
 	outData->targetReg = inData.targetReg;
+	outData->Pc = inData.Pc;
+
 	int aux;
 	uint32 uLocal;
 	int32 local;
