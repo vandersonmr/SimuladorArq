@@ -8,6 +8,7 @@
 
 void acessaMemoria(CONTROLE_EM inData, CONTROLE_MR * outData)
 {
+	outData->opclass=inData.opclass;
 	outData->formato = inData.formato;
 	outData->ulaResult = inData.ulaResult;
 	outData->targetReg = inData.targetReg;

@@ -37,6 +37,7 @@ typedef struct CONTROLE_EM {
 }CONTROLE_EM;
 
 typedef struct CONTROLE_MR {
+	unsigned long int opclass;
 	unsigned long int formato;
 	long int ulaResult;
 	unsigned long int targetReg;

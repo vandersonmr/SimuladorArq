@@ -95,13 +95,14 @@ void CPU_SetBusca2Decodificacao(uint32 Pc, uint32 Instruction)
 /* busca de instrucao */
 void CPU_Busca()
 {
+
+	if(decodificacao2execucao.Jump)
+               BANCO_SetPc(decodificacao2execucao.Pc);	 
 	word data = 0;
 	int PC = BANCO_GetPc();
 	data = MEMORIA_Carregue(PC);
 	CPU_SetBusca2Decodificacao(PC, data);
-	if (decodificacao2execucao.Jump)
-		BANCO_SetPc(decodificacao2execucao.Pc);
-	else
+	
 		BANCO_SetPc(BANCO_GetPc() + 1);
 
 }
@@ -111,8 +112,7 @@ int main()
 	MEMORIA_CarregueArquivo("codigo.src");
 	CPU_Inicializacao();
 	CPU_Execute();
-
-	printf("r2 = %d \n", BANCO_GetRegister(2));
+		printf("R2 = %d \n",BANCO_GetRegister(2));
 	return 0;
 }
 
@@ -120,7 +120,7 @@ int main()
 void CPU_Decodificacao()
 {
 		decodifica(busca2decodificacao.Instruction, &decodificacao2execucao,
-			   BANCO_GetPc());
+			   busca2decodificacao.Pc);
 }
 
 /* execucao de instrucao */

@@ -33,7 +33,7 @@ void carregaRegistradores(){
 			uint32 aux = dec2exec->Pc;
 			dec2exec->Pc=dec2exec->src1Reg;
 			dec2exec->src1Reg=aux;
-		}else if(class==7){
+		}else if(class==5){
 			dec2exec->Pc = BANCO_GetRegister(31);
 		}
         }else if(formato==1){	
@@ -44,7 +44,7 @@ void carregaRegistradores(){
 			= imediato;
 		if(opcode==14){
 			dec2exec->src1Reg 
-				= BANCO_GetPc();
+				= dec2exec->Pc;
 		}		
 		 
         }else if(formato==2){
@@ -56,9 +56,10 @@ void carregaRegistradores(){
                                         dec2exec->src2Reg);
         }else if(formato==3){
                 dec2exec->src1Reg 
-			= BANCO_GetPc();
+			= dec2exec->Pc;
 		dec2exec->src2Reg
 			= 1;
+		dec2exec->targetReg = imediato;
         }
 }
 
@@ -202,7 +203,6 @@ void decodificaFormato3()
 
 void decodificaFormato4()
 {
-	uint32 imediato = wData & imediatoMask2;
-	imediato = imediato >> 2;
+	imediato = wData & imediatoMask2;
 }
 

@@ -52,10 +52,7 @@ main()
 					uRd=atoi(dest); 
 				} else {	// formato 4
 					rd = atoi(dest);
-					aux = (unsigned int) rd;
-					if(rd > 0){
-					
-					}
+					//aux = (unsigned int) rd;
 				}
 
 				if (i >= 0) {
