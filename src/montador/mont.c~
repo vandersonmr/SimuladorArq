@@ -9,25 +9,25 @@ main()
 	char instrucoes[N_INST][6] =
 	    { "ADD", "ADDU", "SUB", "SUBU", "MUL", "MULU", "AND", "OR", "XOR",
 		"NAND", "NOR", "NXOR", "NOT", "LSL", "LSR", "ASR", "SEQ", "SNE",
-		    "SLT", "SLTU", "SLE",
+		"SLT", "SLTU", "SLE",
 		"SLEU", "SQT", "SGTU", "SGE", "SGEU", "LDB", "LDS", "LDW",
-		    "STB", "STS", "STW", "JMPL",
+		"STB", "STS", "STW", "JMPL",
 		"RET", "Noop", "ADDI", "ADDUI", "SUBI", "SUBUI", "ANDI", "ORI",
-		    "XORI", "NANDI", "NORI", "XNORI",
+		"XORI", "NANDI", "NORI", "XNORI",
 		"LSLI", "LSRI", "ASRI", "LUI", "JMP", "BEQ", "BNE", "BLT",
-		    "BLTU", "BLE", "BLEU", "BGT", "BGTU",
+		"BLTU", "BLE", "BLEU", "BGT", "BGTU",
 		"BGE", "BGEU", "BRT", "BRF", "CALL"
 	};
 
 	char inst[10], dest[10], op1[10], op2[10];
 	unsigned short int uRd;
-        unsigned int aux;	
-	int out,rs1,rs2,i,rd;
+	unsigned int aux;
+	int out, rs1, rs2, i, rd;
 
 	while (scanf("%s %s %s %s", inst, op1, op2, dest) != EOF) {
 		//printf("%s %s %s %s\n", inst, op1, op2, dest);
-	
-	for (i = 0; i < N_INST; i++)
+
+		for (i = 0; i < N_INST; i++)
 			if (!strcasecmp(instrucoes[i], inst)) {
 				if (*dest == 'r')
 					rd = atoi(&dest[1]);
@@ -41,7 +41,7 @@ main()
 					rs2 = atoi(&op2[1]);
 				else
 					rs2 = atoi(op2);
-				
+
 				if (i >= 0 && i < 35) {	//Formato 1
 					rs1 = rs1 << 21;
 					rs2 = rs2 << 16;
@@ -49,7 +49,7 @@ main()
 				} else if (i < 62) {	//Formato 2 e 3
 					rs1 = rs1 << 21;
 					rs2 = rs2 << 16;
-					uRd=atoi(dest); 
+					uRd = atoi(dest);
 				} else {	// formato 4
 					rd = atoi(dest);
 					//aux = (unsigned int) rd;
@@ -80,16 +80,18 @@ main()
 						out = 0x18000000;
 					else if (i <= 49)
 						out = 0x40000000
-						    | rs1 | rs2 | uRd | ((i - 35)
-									<< 26);
+						    | rs1 | rs2 | uRd |
+						    ((i - 35)
+						     << 26);
 					else if (i <= 61)
 						out = 0x80000000
-						    | rs1 | rs2 | uRd | ((i - 50)
-									<< 26);
+						    | rs1 | rs2 | uRd |
+						    ((i - 50)
+						     << 26);
 					else if (i == 62)
 						out = 0xC0000000 | rd;
 				}
-				printf("%08x", out);
+				printf("%x\n", out);
 			}
 	}
 	printf("\n");
