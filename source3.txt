@@ -1,3 +1,0 @@
-Noop 0 0 0
-Noop 0 0 0
-JMPL r1 r2 r31
