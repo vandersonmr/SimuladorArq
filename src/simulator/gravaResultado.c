@@ -5,12 +5,7 @@
 int escreveResultado(CONTROLE_MR inData)
 {
 	int aux = 0;
-	if(inData.formato == 3){
-		aux = inData.targetReg; 
-		BANCO_SetRegister(33,aux + inData.Pc);
-		BANCO_SetRegister(31,inData.ulaResult);
-		return 1;
-	}else if (inData.formato == 2) {
+	if (inData.formato == 2) {
 		if (inData.ulaResult == 1) {
 			aux = inData.targetReg;
 			BANCO_SetRegister(33, aux + inData.Pc);

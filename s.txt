@@ -1,0 +1,7 @@
+LUI r2 r2 3
+LUI r1 r1 3
+Noop 0 0 0
+Noop 0 0 0
+BEQ r2 r1 2
+ADDI r2 r2 1
+Noop 0 0 0

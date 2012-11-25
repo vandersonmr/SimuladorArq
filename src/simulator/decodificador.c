@@ -6,7 +6,7 @@
 #define src1RegMask 0x3E00000
 #define src2RegMask 0x1F0000
 #define targetRegMask 0xF800
-#define opMask 0x3C0
+#define opMask 0x7C0
 #define imediatoMask1 0xFFFF
 #define imediatoMask2 0x3FFFFFFF
 uint32 wData;
@@ -59,7 +59,6 @@ void carregaRegistradores(){
 			= dec2exec->Pc;
 		dec2exec->src2Reg
 			= 1;
-		dec2exec->targetReg = imediato;
         }
 }
 
@@ -116,7 +115,7 @@ int32 decodificaOpcode(){
                         case 3: 
 				dec2exec->acessaMemoria
 						= opcode;
-				if(opcode>3){
+				if(opcode>2){
 					dec2exec->targetReg 
 						= 1000;
 				}
@@ -200,10 +199,12 @@ void decodificaFormato3()
 	uint32 aux = dec2exec->src2Reg;
 	dec2exec->src2Reg = dec2exec->targetReg;
 	dec2exec->targetReg=aux;
+	dec2exec->ALU = decodificaOpcode();
 }
 
 void decodificaFormato4()
 {
 	imediato = wData & imediatoMask2;
+	dec2exec->ALU = decodificaOpcode();
 }
 
