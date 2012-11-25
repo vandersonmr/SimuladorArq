@@ -1,7 +1,0 @@
-LUI r2 r2 0
-LUI r3 r3 2
-Noop r0 r0 r0
-Noop r0 r0 r0
-Noop r0 r0 r0
-ADDI r2 r2 1
-JMPL r3 r3 r31

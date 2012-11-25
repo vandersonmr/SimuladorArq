@@ -15,7 +15,7 @@ int endimem;
 void MEMORIA_Inicializacao1(char *namearq)
 {
 	int i;
-	for (i = 0; i < MEMORY_W; m[i++] = 0) ;
+	for (i = 0; i < MEMORY_W; m[i++] = 0x18000000) ;
 	/* area de memoria para ser escrita na tela */
 	mfirst = 0;
 	mlast = 0;
@@ -57,11 +57,11 @@ void MEMORIA_CarregueArquivo(char *file)
 		exit(1);
 	}
 	FILE *f = fopen(file, "rt");
-	char line[10];
+	char line[BUFSIZ];
 	if (f) {
 		uint32 int_output;
 		int i = 0;
-		while (fgets(line, 9, f) != NULL) {
+		while (fgets(line, sizeof(line), f) != NULL) {
 			sscanf(line, "%x", &int_output);
 			m[i++] = int_output;
 		}
