@@ -63,7 +63,8 @@ void MEMORIA_CarregueArquivo(char *file)
 		int i = 0;
 		while (fgets(line, sizeof(line), f) != NULL) {
 			sscanf(line, "%x", &int_output);
-			m[i++] = int_output;
+			if(int_output!=0)
+				m[i++] = int_output;
 		}
 	} else {
 		printf("Error: file does not exist.\n");

@@ -8,6 +8,7 @@ int32 arithop;
 int32 setop;
 int32 memop;
 int32 branch;
+int32 jmpsop;
 
 /* barreira entre estagio de busca e estagio de decodificacao */
 CONTROLE_BD busca2decodificacao;
@@ -26,6 +27,7 @@ void CPU_Inicializacao()
 	setop = 0;
 	memop = 0;
 	branch = 0;
+	jmpsop = 0;
 	/* inicializacao de registradores de instrucoes */
 	busca2decodificacao.Instruction = 0x18000000;
 	decodificacao2execucao.targetReg = -1;
@@ -74,11 +76,32 @@ void CPU_LimpaSinais()
 	Ini_MR();
 }
 
+void contarInstrucao(){
+	int formato = memoria2resultado.formato;
+	int class = memoria2resultado.opclass;
+	if(formato==0){
+		if(class==0 || class==1)
+			arithop++;
+		else if(class==2)
+			setop++;
+		else if(class==3)
+			memop++;
+		else if(class==4 || class==5)
+			jmpsop++;
+	}else if(formato==1)
+		arithop++;
+	else if(formato==2)
+		branch++;
+	else if(formato==3)
+		jmpsop++;
+}
+
 void CPU_Execute()
 {
-	int i = 0;
-	for (i = 0; i < MEMORY_W; i++) {
+	
+	while(BANCO_GetPc()<MEMORY_W){
 		int esvaziaPipe = CPU_Resultado();
+		contarInstrucao();
 		if (!esvaziaPipe) {
 			CPU_Memoria();
 			CPU_Execucao();
@@ -115,7 +138,7 @@ void CPU_Busca()
 
 int main()
 {
-	MEMORIA_CarregueArquivo("codigo.src");
+	MEMORIA_Inicializacao1("codigo.src");
 	CPU_Inicializacao();
 	CPU_Execute();
 	printf("R2 = %d \n", BANCO_GetRegister(2));

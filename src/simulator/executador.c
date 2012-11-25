@@ -27,4 +27,5 @@ void executa(CONTROLE_DE dataDecoded, CONTROLE_EM * results)
 	results->acessaMemoria = dataDecoded.acessaMemoria;
 	results->src2Reg = dataDecoded.src2Reg;
 	results->formato = dataDecoded.formato;
+	results->opclass = dataDecoded.opclass;
 }

@@ -100,6 +100,7 @@ void decodifica(uint32 data, CONTROLE_DE * regControle,uint32 Pc)
 	}
 	carregaRegistradores();
 	dec2exec->formato=formato;
+	dec2exec->opclass = class;
 }
 
 

@@ -21,7 +21,7 @@ typedef struct CONTROLE_DE {
 	unsigned long int acessaMemoria;
 	unsigned long int formato;
 	int Jump;
-	
+	unsigned long int opclass;	
 }CONTROLE_DE;
 
 typedef struct CONTROLE_EM {
