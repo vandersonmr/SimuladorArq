@@ -4,46 +4,77 @@
 #include "headers/defines.h"
 #include "headers/memoria.h"
 #include "headers/cpu.h"
-/*Linux é de mais*/
-/* constructor */
-inicialize_simulacao_1(char *namearq)
-{
+#include "headers/banco.h"
 
-	/* INSTANCIACAO DOS COMPONENTES DO COMPUTADOR */
+void imprimeRegistradores(){
+	int i;
+	printf("Registradores \n");
+	for(i=0;i<31;i+=2){
+		printf("R%d = %d	R%d = %d\n",i,
+				BANCO_GetRegister(i),i+1,BANCO_GetRegister(i+1));
+	}
 
-	/* memória */
-	//MEMORIA_Inicializacao1(namearq);
-
-	/* cpu */
-	//CPU_Inicializacao();
-
+	printf("\n ------------------------------------------------\n");
 }
 
-/* constructor */
-inicialize_simulacao_2(char *namearq, int first, int last)
-{
-
-	/* INSTANCIACAO DOS COMPONENTES DO COMPUTADOR */
-
-	/* memória */
-	//MEMORIA_Inicializacao2(namearq, first, last);
-
-	/* cpu */
-	//CPU_Inicializacao();
-
-}
-
-execute_simulacao()
-{
-
-}
-
-termine_simulacao()
-{
-
-	//MEMORIA_Finalizacao();
-	//CPU_Finalizacao();
-
+void imprimeMemoria(int mS,int mF){
+	int i;
+	printf("Memória \n");
+	printf("Endereço  -  Valor\n");
+	for(i=mS;i<=mF;i++)
+		printf("%d  =  %d\n",
+			i,MEMORIA_CarregueData(i));	
+	printf("\n ------------------------------------------------\n");
 }
 
 
+int main(int argc, char *argv[]) {
+	char *fileName = "codigo.src";
+	int mS;
+	int mF;
+	int pM=0;
+	int reg=0;
+	int e=0;
+	int x;
+    	for (x=0; x<argc; x++){
+        	char *s = argv[x];
+		if(strcmp(s,"-h") == 0 || strcmp(s,"--help") == 0){
+			printf("\nSimulador arquitetura MIPS verão 0.1\n");
+			printf("\nParametros: \n\n");
+			printf("	-s <arquivo> Para definir arquivo onde se encontra o código hexadecimal a ser executado.\n");
+			printf("	-r Imprime o valor dos registradores\n");
+			printf("	-pm <inicio> <fim> Imprime uma faixa de valores da memória de dados.\n");
+			printf("	-e Imprime quantidade de instruções executadas.\n");
+			printf("\n		Esse simulador possui poderes de super foca\n\n");	
+		}else{ 
+			if(strcmp(s,"-s") == 0)
+				fileName=argv[x+1];
+			if(strcmp(s,"-r")==0)	
+				reg=1;
+			if(strcmp(s,"-pm")==0){
+				pM=1;
+				mS=atoi(argv[x+1]);
+				mF=atoi(argv[x+2]);
+			}
+			if(strcmp(s,"-e")==0)
+				e=1;
+				
+						
+		}
+		
+	}
+	
+	
+        MEMORIA_Inicializacao1(fileName);
+        CPU_Inicializacao();
+        CPU_Execute();
+	if(reg)
+		imprimeRegistradores();
+        if(pM)
+		imprimeMemoria(mS,mF);
+	if(e)
+		imprimirDadosEstatisticos();
+
+  	return 1;
+
+}

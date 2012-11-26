@@ -2,7 +2,7 @@
 #define CPU_H
 void CPU_Execute();
 void CPU_Imprime();
-
+void imprimirDadosEstatisticos();
 typedef struct CONTROLE_BD  {
         /* PC */
         unsigned long int Pc;

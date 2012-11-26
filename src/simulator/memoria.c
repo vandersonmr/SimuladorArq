@@ -66,6 +66,7 @@ void MEMORIA_CarregueArquivo(char *file)
 			if(int_output!=0)
 				m[i++] = int_output;
 		}
+		m[i]=0x18000000;
 	} else {
 		printf("Error: file does not exist.\n");
 	}

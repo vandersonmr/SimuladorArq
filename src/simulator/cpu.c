@@ -18,6 +18,16 @@ CONTROLE_DE decodificacao2execucao;
 CONTROLE_EM execucao2memoria;
 /* barreira entre estagio de acesso à memória e o estagio de escrita do resultado */
 CONTROLE_MR memoria2resultado;
+void imprimirDadosEstatisticos(){
+	int total = arithop+setop+memop+branch+jmpsop;
+	printf("\nDas instruções executadas: \n");
+	printf("Aritméticas: %f% \n",((float)arithop/total)*100);
+	printf("Sets: %f% \n ",((float)setop/total)*100);
+	printf("Memória: %f% \n ",((float)memop/total)*100);
+	printf("branch: %f% \n ",((float)branch/total)*100);
+	printf("jmps: %f% \n ",((float)jmpsop/total)*100);
+	printf("Total de %d operações.\n\n",total);
+}
 
 /* inicializacao */
 void CPU_Inicializacao()
@@ -136,14 +146,7 @@ void CPU_Busca()
 
 }
 
-int main()
-{
-	MEMORIA_Inicializacao1("codigo.src");
-	CPU_Inicializacao();
-	CPU_Execute();
-	printf("R2 = %d \n", BANCO_GetRegister(2));
-	return 0;
-}
+
 
 /* decodificacao de instrucao */
 void CPU_Decodificacao()
