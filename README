@@ -27,3 +27,12 @@ chamado hexa.
 
 Simulando:
 
+	Parametros: 
+
+	-s <arquivo> Para definir arquivo onde se encontra o código hexadecimal a ser executado.
+	-r Imprime o valor dos registradores
+	-pm <inicio> <fim> Imprime uma faixa de valores da memória de dados.
+	-e Imprime quantidade de instruções executadas.
+	--steps Imprime ciclo por ciclo.
+		Esse simulador possui poderes de super foca
+
