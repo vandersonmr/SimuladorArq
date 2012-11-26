@@ -3,6 +3,8 @@
 void CPU_Execute();
 void CPU_Imprime();
 void imprimirDadosEstatisticos();
+int CPU_Ciclo();
+
 typedef struct CONTROLE_BD  {
         /* PC */
         unsigned long int Pc;

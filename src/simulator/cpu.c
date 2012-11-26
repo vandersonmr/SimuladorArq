@@ -18,15 +18,16 @@ CONTROLE_DE decodificacao2execucao;
 CONTROLE_EM execucao2memoria;
 /* barreira entre estagio de acesso à memória e o estagio de escrita do resultado */
 CONTROLE_MR memoria2resultado;
-void imprimirDadosEstatisticos(){
-	int total = arithop+setop+memop+branch+jmpsop;
+void imprimirDadosEstatisticos()
+{
+	int total = arithop + setop + memop + branch + jmpsop;
 	printf("\nDas instruções executadas: \n");
-	printf("Aritméticas: %f% \n",((float)arithop/total)*100);
-	printf("Sets: %f% \n ",((float)setop/total)*100);
-	printf("Memória: %f% \n ",((float)memop/total)*100);
-	printf("branch: %f% \n ",((float)branch/total)*100);
-	printf("jmps: %f% \n ",((float)jmpsop/total)*100);
-	printf("Total de %d operações.\n\n",total);
+	printf("Aritméticas: %f% \n", ((float)arithop / total) * 100);
+	printf("Sets: %f% \n ", ((float)setop / total) * 100);
+	printf("Memória: %f% \n ", ((float)memop / total) * 100);
+	printf("branch: %f% \n ", ((float)branch / total) * 100);
+	printf("jmps: %f% \n ", ((float)jmpsop / total) * 100);
+	printf("Total de %d operações.\n\n", total);
 }
 
 /* inicializacao */
@@ -86,30 +87,35 @@ void CPU_LimpaSinais()
 	Ini_MR();
 }
 
-void contarInstrucao(){
+void contarInstrucao()
+{
 	int formato = memoria2resultado.formato;
 	int class = memoria2resultado.opclass;
-	if(formato==0){
-		if(class==0 || class==1)
+	if (formato == 0) {
+		if (class == 0 || class == 1)
 			arithop++;
-		else if(class==2)
+		else if (class == 2)
 			setop++;
-		else if(class==3)
+		else if (class == 3)
 			memop++;
-		else if(class==4 || class==5)
+		else if (class == 4 || class == 5)
 			jmpsop++;
-	}else if(formato==1)
+	} else if (formato == 1)
 		arithop++;
-	else if(formato==2)
+	else if (formato == 2)
 		branch++;
-	else if(formato==3)
+	else if (formato == 3)
 		jmpsop++;
 }
 
 void CPU_Execute()
 {
-	
-	while(BANCO_GetPc()<MEMORY_W){
+	while (CPU_Ciclo()) ;
+}
+
+int CPU_Ciclo()
+{
+	if (BANCO_GetPc() < MEMORY_W) {
 		int esvaziaPipe = CPU_Resultado();
 		contarInstrucao();
 		if (!esvaziaPipe) {
@@ -120,7 +126,9 @@ void CPU_Execute()
 			CPU_LimpaSinais();
 		}
 		CPU_Busca();
-
+		return 1;
+	} else {
+		return 0;
 	}
 }
 
@@ -145,8 +153,6 @@ void CPU_Busca()
 	BANCO_SetPc(BANCO_GetPc() + 1);
 
 }
-
-
 
 /* decodificacao de instrucao */
 void CPU_Decodificacao()
