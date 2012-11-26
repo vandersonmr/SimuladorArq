@@ -1,4 +1,5 @@
-
+#ifndef acessoMemoria_h
+#define acessoMemoria_h
 /* inicializações */
 MEMORIA_Inicializacao1(char*);
 MEMORIA_Inicializacao2(char*,int,int);
@@ -16,5 +17,5 @@ void MEMORIA_ArmazeneData(uint32, word);
 void MEMORIA_CarregueArquivo(char*);
 
 void MEMORIA_Imprime();
-
+#endif
 

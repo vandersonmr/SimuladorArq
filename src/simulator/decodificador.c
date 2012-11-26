@@ -57,6 +57,7 @@ void carregaRegistradores(){
         }else if(formato==3){
                 dec2exec->src1Reg 
 			= dec2exec->Pc;
+		dec2exec->Pc=imediato;
 		dec2exec->src2Reg
 			= 1;
         }
@@ -147,8 +148,7 @@ int32 decodificaOpcode(){
         }else if(formato==3){
                 dec2exec->Jump=1;
 		dec2exec->targetReg
-			= 31;
-		dec2exec->Pc=imediato; 
+			= 31; 
                 return 0;
         }
 }
